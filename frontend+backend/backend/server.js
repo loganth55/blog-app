@@ -3,6 +3,7 @@ const mongoose = require('mongoose')
 const cors = require("cors");
 const routes = require('./routes/data')
 const categoryRoutes = require("./routes/categoryController");
+const commentRoutes = require("./routes/commentController")
 const app = express()
 
 
@@ -20,6 +21,8 @@ app.use(express.json())
 app.use("/api/data", routes);
 
 app.use("/api" , categoryRoutes)
+app.use("/uploads", express.static("uploads"));
+app.use("/api" , commentRoutes)
 
 //mongodb connect
 mongoose.connect("mongodb://localhost:27017/blog")

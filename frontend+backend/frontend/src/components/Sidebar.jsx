@@ -81,7 +81,7 @@ function Sidebar() {
             </li>
 
             <li className="cursor-pointer hover:text-blue-600">
-              🔗 Social Links
+              🔗 Comment
             </li>
           </ul>
         </div>
