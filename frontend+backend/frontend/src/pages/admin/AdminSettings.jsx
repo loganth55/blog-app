@@ -1,61 +1,79 @@
 import React from "react";
-import { useState,useEffect } from "react";
-import { getSettings } from "../services/settingsApi";
-import { createSettings } from "../services/settingsApi";
-import { editSettings } from "../services/settingsApi";
-
+import { useState, useEffect } from "react";
+import { getSettings } from "../../services/settingsApi";
+import { createSettings } from "../../services/settingsApi";
+import { editSettings } from "../../services/settingsApi";
 
 function AdminSettings() {
+  const [siteName, setSiteName] = useState("");
+  const [contactEmail, setContactEmail] = useState("");
+  const [footerText, setFooterText] = useState("");
+  const [logo, setLogo] = useState(null);
+  const [settingsId, setSettingsId] = React.useState(null);
 
-    const [siteName, setSiteName] = useState("");
-    const [contactEmail, setContactEmail] = useState("");
-    const [footerText, setFooterText] = useState("");
-    const [logo, setLogo] = useState(null);
-    const[settingsId,setSettingsId] = React.useState(null)
+  useEffect(() => {
+    const fetchSettings = async () => {
+      try {
+        const settingsData = await getSettings();
 
-useEffect(() => {
-  const fetchSettings = async () => {
-    try {
-      const settingsData = await getSettings();
+        if (settingsData) {
+          setSettingsId(settingsData._id);
+          setSiteName(settingsData.siteName || "");
+          setContactEmail(settingsData.contactEmail || "");
+          setFooterText(settingsData.footerText || "");
+          setLogo(settingsData.logo || "");
+        }
 
-      if (settingsData) {
-        setSettingsId(settingsData._id);
-        setSiteName(settingsData.siteName || "");
-        setContactEmail(settingsData.contactEmail || "");
-        setFooterText(settingsData.footerText || "");
-        setLogo(settingsData.logo || "");
+        console.log(settingsData);
+      } catch (err) {
+        console.log("Error fetching settings:", err);
       }
+    };
 
-      console.log(settingsData);
-    } catch (err) {
-      console.log("Error fetching settings:", err);
-    }
-  };
+    fetchSettings();
+  }, []);
 
-  fetchSettings();
-}, []);
-
-const handleCreateSettings = async()=>{
+  const handleCreateSettings = async () => {
     try {
       const formData = new FormData();
 
       formData.append("siteName", siteName);
       formData.append("contactEmail", contactEmail);
       formData.append("footerText", footerText);
-    
-   
+
       if (logo) {
-    formData.append("logo", logo);
-  }
-      const data = await createSettings(formData)
-    
+        formData.append("logo", logo);
+      }
+
+      const data = await createSettings(formData);
+
+      setSettingsId(data._id);
+
+      console.log(data);
+    } catch (err) {
+      console.log("Error creating settings:", err);
     }
-    
-    catch (err) {
-      console.log("Error creating category:", err);
+  };
+
+  const handleUpdateSettings = async () => {
+    try {
+      const updateFormData = new FormData();
+
+      updateFormData.append("siteName", siteName);
+      updateFormData.append("contactEmail", contactEmail);
+      updateFormData.append("footerText", footerText);
+
+      if (logo) {
+        updateFormData.append("logo", logo);
+      }
+
+      const updatedSettings = await editSettings(settingsId, updateFormData);
+
+      console.log(updatedSettings);
+    } catch (err) {
+      console.log("Error updating settings:", err);
     }
-}
-  
+  };
 
   return (
     <div className="min-h-screen bg-slate-100 p-6">
@@ -137,14 +155,25 @@ const handleCreateSettings = async()=>{
               Current Logo
             </label>
 
-            <div className="w-40 h-40 border-2 border-dashed rounded-2xl flex items-center justify-center text-slate-400">
-              Logo Preview
+            <div className="w-40 h-40 border-2 border-dashed rounded-2xl overflow-hidden flex items-center justify-center">
+              {logo ? (
+                <img
+                  src={`http://localhost:8000${logo}`}
+                  alt="Logo"
+                  className="w-full h-full object-cover"
+                />
+              ) : (
+                <span className="text-slate-400">Logo Preview</span>
+              )}
             </div>
           </div>
 
           {/* Save Button */}
-          <button className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-4 rounded-2xl transition-all">
-            Save Settings
+          <button
+            onClick={settingsId ? handleUpdateSettings : handleCreateSettings}
+            className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-4 rounded-2xl transition-all"
+          >
+            {settingsId ? "Update Settings" : "Save Settings"}
           </button>
         </div>
       </div>

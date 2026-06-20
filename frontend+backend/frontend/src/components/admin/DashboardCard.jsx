@@ -1,7 +1,15 @@
-import {deletepost} from '../services/blogApi'
-import {Link} from "react-router-dom"
- 
-function DashboardCard({ title, category, content, author,description,id, deletePost }) {
+import { deletepost } from "../../services/blogApi";
+import { Link } from "react-router-dom";
+
+function DashboardCard({
+  title,
+  category,
+  content,
+  author,
+  description,
+  id,
+  deletePost,
+}) {
   return (
     <div className="bg-white rounded-2xl shadow-md hover:shadow-xl transition-all duration-300 overflow-hidden">
       {/* Image */}

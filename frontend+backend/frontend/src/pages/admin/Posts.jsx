@@ -1,10 +1,9 @@
 import React from "react";
 import { useEffect } from "react";
-import { getposts } from "../services/blogApi";
-import DashboardCard from "../components/DashboardCard";
+import { getposts } from "../../services/blogApi";
+import DashboardCard from "../../components/admin/DashboardCard";
 import { Link } from "react-router-dom";
-import { deletepost } from "../services/blogApi";
-
+import { deletepost } from "../../services/blogApi";
 
 function Posts() {
   const [post, setPost] = React.useState([]);
@@ -22,14 +21,14 @@ function Posts() {
     fetchPosts();
   }, []);
 
-const deletePost = async (id) => {
-  try {
-    await deletepost(id);
-    setPost(post.filter((item) => item._id !== id));
-  } catch (err) {
-    console.log("Error fetching posts:", err);
-  }
-};
+  const deletePost = async (id) => {
+    try {
+      await deletepost(id);
+      setPost(post.filter((item) => item._id !== id));
+    } catch (err) {
+      console.log("Error fetching posts:", err);
+    }
+  };
 
   console.log(post);
 
@@ -71,7 +70,7 @@ const deletePost = async (id) => {
           <h3 className="text-gray-600">Published</h3>
 
           <p className="text-3xl font-bold mt-2">
-          {post.filter((item)=> item.status === "Published").length}
+            {post.filter((item) => item.status === "Published").length}
           </p>
         </div>
 

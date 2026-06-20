@@ -1,10 +1,10 @@
-import StatsCard from "../components/StatsCard";
+import StatsCard from "../../components/admin/StatsCard";
 import { useState, useEffect } from "react";
 
-import { getposts } from "../services/blogApi";
-import { getAllCategory } from "../services/categoryApi";
-import { getComment } from "../services/commentApi";
-import { getSubscriber } from "../services/subscriberApi";
+import { getposts } from "../../services/blogApi";
+import { getAllCategory } from "../../services/categoryApi";
+import { getComment } from "../../services/commentApi";
+import { getSubscriber } from "../../services/subscriberApi";
 function Dashboard() {
   const [posts, setPosts] = useState([]);
   const [categories, setCategories] = useState([]);

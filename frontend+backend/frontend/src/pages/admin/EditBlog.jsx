@@ -1,6 +1,6 @@
-import React, { useState,useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
-import { getsinglepost, updatepost } from "../services/blogApi";
+import { getsinglepost, updatepost } from "../../services/blogApi";
 import { useNavigate } from "react-router-dom";
 const EditBlog = () => {
   const [title, setTitle] = useState("");
@@ -9,54 +9,52 @@ const EditBlog = () => {
   const [content, setContent] = useState("");
   const [category, setCategory] = useState("");
   const [status, setStatus] = useState("");
-  const [editPost,setEditPost] = useState(null)
+  const [editPost, setEditPost] = useState(null);
 
-  const {id} = useParams();
+  const { id } = useParams();
   console.log(id);
 
-
-  useEffect(()=>{
+  useEffect(() => {
     console.log("id before api call:", id);
     const getSinglePost = async (id) => {
       try {
-       const data = await getsinglepost(id);
+        const data = await getsinglepost(id);
         setEditPost(data);
-        setTitle(data.title)
-        setAuthor(data.author)
+        setTitle(data.title);
+        setAuthor(data.author);
         setDescription(data.description);
         setContent(data.content);
-        setCategory(data.category)
-        setStatus(data.status)
-        setEditPost(data.esitPost)
+        setCategory(data.category);
+        setStatus(data.status);
+        setEditPost(data.esitPost);
       } catch (err) {
         console.log("Error fetching posts:", err);
       }
     };
     getSinglePost(id);
-  },[])
+  }, []);
 
-  console.log(editPost)
+  console.log(editPost);
 
-
-const navigate = useNavigate();
-const handleUpdate = async () =>{
-  try {
-    const updatedData = {
-      title,
-      author,
-      description,
-      content,
-      category,
-      status
-    };
-    console.log(updatedData)
-    const datas = await updatepost(id,updatedData)
-    console.log(datas)
-    navigate("/posts");
-  } catch (err) {
-    console.log("Error fetching posts:", err);
-  }
-}
+  const navigate = useNavigate();
+  const handleUpdate = async () => {
+    try {
+      const updatedData = {
+        title,
+        author,
+        description,
+        content,
+        category,
+        status,
+      };
+      console.log(updatedData);
+      const datas = await updatepost(id, updatedData);
+      console.log(datas);
+      navigate("/posts");
+    } catch (err) {
+      console.log("Error fetching posts:", err);
+    }
+  };
 
   return (
     <div className="p-8 bg-slate-50 min-h-screen">
@@ -72,7 +70,6 @@ const handleUpdate = async () =>{
               value={title}
               onChange={(e) => {
                 setTitle(e.target.value);
-                
               }}
               className="w-full border rounded-lg p-3"
               placeholder="Enter blog title"

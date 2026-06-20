@@ -18,7 +18,7 @@ function Sidebar() {
       <div className="space-y-8">
         {/* Dashboard */}
         <div>
-          <Link to="/">
+          <Link to="/admin">
             <div className="bg-blue-50 border border-blue-200 rounded-xl px-4 py-3 flex items-center gap-3 hover:bg-blue-100 transition">
               <MdDashboard size={20} />
               <span>Dashboard</span>
