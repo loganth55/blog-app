@@ -305,4 +305,3 @@ console.log(filteredPosts);
 }
 
 export default Blogs;
-
