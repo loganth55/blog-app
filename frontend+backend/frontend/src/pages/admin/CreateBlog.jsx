@@ -22,6 +22,13 @@ function CreateBlog() {
       console.log(data);
       const datas = await createposts(data);
       console.log(datas);
+      setTitle("")
+      setAuthor("")
+      setDescription("")
+      setContent("")
+      setCategory("")
+      setStatus("")
+
     } catch (err) {
       console.log("Error fetching posts:", err);
     }

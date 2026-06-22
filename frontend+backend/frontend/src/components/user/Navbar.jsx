@@ -27,13 +27,17 @@ function Navbar() {
 
             {/* Desktop Buttons */}
             <div className="hidden md:flex items-center gap-4">
-              <button className="text-sm font-medium text-slate-700">
-                Log in
-              </button>
+              <Link to="/login">
+                <button className="text-sm font-medium text-slate-700">
+                  Log in
+                </button>
+              </Link>
 
-              <button className="bg-slate-900 text-white px-5 py-2.5 rounded-xl text-sm font-medium hover:bg-slate-800 transition">
-                Sign Up
-              </button>
+              <Link to="/register">
+                <button className="bg-slate-900 text-white px-5 py-2.5 rounded-xl text-sm font-medium hover:bg-slate-800 transition">
+                  Sign Up
+                </button>
+              </Link>
             </div>
 
             {/* Mobile Button */}
@@ -96,11 +100,15 @@ function Navbar() {
 
             <hr />
 
-            <button className="text-left">Log in</button>
+            <Link to="/login">
+              <button className="text-left">Log in</button>
+            </Link>
 
-            <button className="bg-slate-900 text-white py-3 rounded-xl">
-              Sign Up
-            </button>
+            <Link to="/register">
+              <button className="bg-slate-900 text-white py-3 rounded-xl">
+                Sign Up
+              </button>
+            </Link>
           </div>
         </div>
       </div>

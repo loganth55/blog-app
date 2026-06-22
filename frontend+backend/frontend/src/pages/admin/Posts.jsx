@@ -13,6 +13,7 @@ function Posts() {
       try {
         const data = await getposts();
         setPost(data);
+        
       } catch (err) {
         console.log("Error fetching posts:", err);
       }

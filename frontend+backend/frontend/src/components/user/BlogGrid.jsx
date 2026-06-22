@@ -12,7 +12,7 @@ function BlogGrid({ posts }) {
         {posts.slice(0, 6).map((item) => (
           <div
             key={item._id}
-            className="bg-white border rounded-2xl overflow-hidden hover:shadow-lg transition cursor-pointer"
+            className="bg-white border rounded-3xl overflow-hidden hover:shadow-xl hover:-translate-y-2 transition duration-300 cursor-pointer"
             onClick={() => navigate(`/blog/${item._id}`)}
           >
             {item.img ? (
@@ -34,7 +34,9 @@ function BlogGrid({ posts }) {
 
               <h3 className="text-xl font-semibold mb-3">{item.title}</h3>
 
-              <p className="text-gray-600 text-sm mb-4">{item.description}</p>
+              <p className="text-slate-600 mb-5 line-clamp-3">
+                {item.description}
+              </p>
 
               <div className="flex justify-between text-sm text-gray-500">
                 <span>{item.author}</span>

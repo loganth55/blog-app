@@ -1,25 +1,26 @@
 import React from "react";
 import { getAllCategory } from "../../services/categoryApi";
-import { useEffect,useState } from "react";
-
+import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 function Category() {
+  const [getCategories, setCategories] = React.useState([]);
+  const navigate = useNavigate();
 
-    const [getCategories,setCategories] = React.useState([])
-
-    useEffect(()=>{
-     try{
-          const getAllCategories = async () => {
-            const data = await getAllCategory();
-            setCategories(data);
-            console.log(data);
-          };
-     }
-       catch (err) {
+  useEffect(() => {
+    const getAllCategories = async () => {
+      try {
+        const data = await getAllCategory();
+        setCategories(data);
+        console.log(data);
+      } catch (err) {
         console.log("Error fetching posts:", err);
       }
-      getAllCategories()
-    },[])
+    };
+    getAllCategories();
+  }, []);
+
+  console.log(getCategories);
 
   return (
     <div className="bg-white min-h-screen">
@@ -40,39 +41,29 @@ function Category() {
       </section>
 
       {/* Categories */}
-      <section className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 pb-20">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          <div className="border rounded-3xl p-8 hover:shadow-xl hover:-translate-y-1 transition cursor-pointer">
-            <h3 className="text-2xl font-bold mb-3">Technology</h3>
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        {getCategories.map((category) => (
+          <div
+            key={category._id}
+            onClick={() => navigate(`/category/${category.name}`)}
+            className="border rounded-3xl overflow-hidden hover:shadow-xl hover:-translate-y-1 transition duration-300 cursor-pointer"
+          >
+            <img
+              src={`http://localhost:8000${category.img}`}
+              alt={category.name}
+              className="w-full h-56 object-cover"
+            />
 
-            <p className="text-slate-600 mb-6">
-              Latest technology news and innovations.
-            </p>
+            <div className="p-6">
+              <h3 className="text-2xl font-bold mb-3">{category.name}</h3>
 
-            <span className="text-blue-600 font-medium">Explore →</span>
+              <p className="text-slate-600 mb-6">{category.description}</p>
+
+              <span className="text-blue-600 font-medium">Explore →</span>
+            </div>
           </div>
-
-          <div className="border rounded-3xl p-8 hover:shadow-xl hover:-translate-y-1 transition cursor-pointer">
-            <h3 className="text-2xl font-bold mb-3">Frontend</h3>
-
-            <p className="text-slate-600 mb-6">
-              React, UI development and modern frontend tools.
-            </p>
-
-            <span className="text-blue-600 font-medium">Explore →</span>
-          </div>
-
-          <div className="border rounded-3xl p-8 hover:shadow-xl hover:-translate-y-1 transition cursor-pointer">
-            <h3 className="text-2xl font-bold mb-3">Backend</h3>
-
-            <p className="text-slate-600 mb-6">
-              APIs, servers and backend architecture.
-            </p>
-
-            <span className="text-blue-600 font-medium">Explore →</span>
-          </div>
-        </div>
-      </section>
+        ))}
+      </div>
     </div>
   );
 }

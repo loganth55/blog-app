@@ -17,6 +17,10 @@ import UserLayout from "./layouts/UserLayout";
 import Home from "./pages/user/Home";
 import Blogs from "./pages/user/Blogs";
 import Category from "./pages/user/Category";
+import CategoryBlogs from "./pages/user/CategoryBlogs";
+import Login from "./pages/user/Login";
+import Register from "./pages/user/Register"
+
 function App() {
   return (
     <Routes>
@@ -39,6 +43,9 @@ function App() {
         <Route path="/blogs" element={<Blogs />} />
         <Route path="/blog/:id" element={<BlogDetails />} />
         <Route path="/categories" element={<Category />}></Route>
+        <Route path="/category/:categoryName" element={<CategoryBlogs />} />
+        <Route path="/login" element={<Login />} />
+        <Route path = "/register" element={<Register />}></Route>
       </Route>
     </Routes>
   );
